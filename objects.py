@@ -36,4 +36,33 @@ class Ball(pygame.sprite.Sprite):
             self.speed_y *= -1
 
 
+class Platform(pygame.sprite.Sprite):
+    def __init__(self, color, s_width, s_height):
+        super().__init__()
+        self.image = pygame.Surface((80, 10))
+        self.image.fill(color)
+        self.rect = self.image.get_rect()
+        self.rect.centerx = s_width // 2
+        self.rect.bottom = s_height - 20
+        self.speed_x = 0
+        self.s_width = s_width
+
+    def update(self):
+        self.rect.x += self.speed_x
+
+        # ограничиваем движение
+        if self.rect.left < 0:
+            self.rect.left = 0
+        if self.rect.right > self.s_width:
+            self.rect.right = self.s_width
+
+
+class Brick(pygame.sprite.Sprite):
+    def __init__(self, x, y, color):
+        super().__init__()
+        self.image = pygame.Surface((60, 20))
+        self.image.fill(color)
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
 
